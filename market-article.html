@@ -10,34 +10,35 @@
     <p id="article-content"></p>
     <small id="article-time"></small>
 
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const urlParams = new URLSearchParams(window.location.search);
-            const articleId = urlParams.get("id");
+   <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const urlParams = new URLSearchParams(window.location.search);
+        const articleId = urlParams.get("id");
 
-            if (!articleId) {
-                document.body.innerHTML = "<h2>文章参数缺失</h2>";
-                return;
-            }
+        if (!articleId) {
+            document.body.innerHTML = "<h2>文章参数缺失</h2>";
+            return;
+        }
 
-            fetch("market-posts.json") // 这里是新的供需信息文章文件
-                .then(response => response.json())
-                .then(data => {
-                    const article = data.find(a => a.id == articleId);
-                    if (!article) {
-                        document.body.innerHTML = "<h2>未找到文章</h2>";
-                        return;
-                    }
+        fetch("market-posts.json") // 读取供需文章
+            .then(response => response.json())
+            .then(data => {
+                const article = data.find(a => a.id == articleId);
+                if (!article) {
+                    document.body.innerHTML = "<h2>未找到文章</h2>";
+                    return;
+                }
 
-                    document.querySelector("#article-title").textContent = article.title;
-                    document.querySelector("#article-content").textContent = article.content;
-                    document.querySelector("#article-time").textContent = article.time;
-                })
-                .catch(error => {
-                    console.error("加载文章失败:", error);
-                    document.body.innerHTML = "<h2>加载文章失败</h2>";
-                });
-        });
-    </script>
+                document.querySelector("#article-title").textContent = article.title;
+                document.querySelector("#article-content").innerHTML = article.content.replace(/\n/g, "<br>"); // 显示文章内容
+                document.querySelector("#article-time").textContent = "发布时间：" + article.time;
+            })
+            .catch(error => {
+                console.error("加载文章失败:", error);
+                document.body.innerHTML = "<h2>加载文章失败</h2>";
+            });
+    });
+</script>
+
 </body>
 </html>
