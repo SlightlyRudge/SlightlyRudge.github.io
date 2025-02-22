@@ -7,7 +7,6 @@
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
         h1 { text-align: center; }
-        .subcategory { margin-top: 20px; font-size: 20px; font-weight: bold; }
         .article-list { margin-left: 20px; }
         .article-item { padding: 5px; }
         .article-item a { text-decoration: none; color: #333; font-size: 16px; }
@@ -15,49 +14,44 @@
     </style>
 </head>
 <body>
-    <h1 id="category-title"></h1>
+    <h1 id="subcategory-title"></h1>
     <div id="content"></div>
 
     <script>
         async function loadArticles() {
             const params = new URLSearchParams(window.location.search);
-            const category = params.get("category");
-            if (!category) {
-                document.getElementById("category-title").innerText = "分类未找到";
+            const subcategory = params.get("subcategory");
+            if (!subcategory) {
+                document.getElementById("subcategory-title").innerText = "子分类未找到";
                 return;
             }
-            document.getElementById("category-title").innerText = category;
+            document.getElementById("subcategory-title").innerText = subcategory;
 
             try {
                 const response = await fetch("articles.json"); // 文章索引文件
                 const data = await response.json();
-                const subcategories = data[category];
+                
+                let foundArticles = [];
+                for (const category in data) {
+                    if (data[category][subcategory]) {
+                        foundArticles = data[category][subcategory];
+                        break;
+                    }
+                }
 
-                if (!subcategories) {
+                if (foundArticles.length === 0) {
                     document.getElementById("content").innerHTML = "<p>暂无文章</p>";
                     return;
                 }
 
-                const contentContainer = document.getElementById("content");
-
-                Object.keys(subcategories).forEach(subcategory => {
-                    const subcategoryDiv = document.createElement("div");
-                    subcategoryDiv.className = "subcategory";
-                    subcategoryDiv.innerText = subcategory;
-
-                    const articleList = document.createElement("div");
-                    articleList.className = "article-list";
-
-                    subcategories[subcategory].forEach(article => {
-                        const articleItem = document.createElement("div");
-                        articleItem.className = "article-item";
-                        articleItem.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
-                        articleList.appendChild(articleItem);
-                    });
-
-                    contentContainer.appendChild(subcategoryDiv);
-                    contentContainer.appendChild(articleList);
+                const articleList = document.getElementById("content");
+                foundArticles.forEach(article => {
+                    const articleItem = document.createElement("div");
+                    articleItem.className = "article-item";
+                    articleItem.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
+                    articleList.appendChild(articleItem);
                 });
+
             } catch (error) {
                 console.error("加载文章列表失败:", error);
             }
