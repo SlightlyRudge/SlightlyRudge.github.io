@@ -33,7 +33,7 @@
     try {
         // **修改文件路径，确保获取原始 Markdown**
         const encodedFile = encodeURIComponent(file);
-        const filePath = `https://raw.githubusercontent.com/SlightlyRudge/sp.github.io/main/articles/${encodedFile}`;
+        const filePath = `https://slightlyrudge.github.io/articles/${encodedFile}`;
         console.log("加载文章路径:", filePath);
 
         const response = await fetch(filePath);
