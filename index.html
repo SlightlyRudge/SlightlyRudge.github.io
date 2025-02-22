@@ -61,7 +61,7 @@ async function loadCategories() {
         }
 
         const data = await response.json();
-        console.log("API 数据：", data); // 调试用
+        console.log("API 数据：", data); // 调试用，查看 API 结构
 
         const container = document.getElementById('categories');
         container.innerHTML = '';
@@ -79,8 +79,8 @@ async function loadCategories() {
             buttonContainer.className = 'buttons';
             section.appendChild(buttonContainer);
 
-            // 这里用 Object.keys() 遍历子分类，避免变成 0, 1, 2
-            Object.keys(data[category]).forEach(subcategory => {
+            // 由于 data[category] 是数组，使用 forEach 遍历
+            data[category].forEach(subcategory => {
                 const btn = document.createElement('a');
                 btn.className = 'btn';
                 btn.innerText = subcategory;
@@ -97,6 +97,7 @@ async function loadCategories() {
 }
 
 loadCategories();
+
 
 
     </script>
