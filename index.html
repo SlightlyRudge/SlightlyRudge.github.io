@@ -154,15 +154,27 @@ document.getElementById("search-btn").addEventListener("click", async function()
     const query = document.getElementById("search-input").value.trim().toLowerCase();
     if (!query) return;
 
-    const response = await fetch("articles.json"); // 文章数据文件
-    const articles = await response.json();
+    try {
+        const response = await fetch("articles.json");
+        const data = await response.json();
+        let articles = [];
 
-    const results = articles.filter(article => 
-        article.title.toLowerCase().includes(query) || 
-        article.content.toLowerCase().includes(query)
-    );
+        // 遍历所有分类，提取所有文章
+        for (const category in data) {
+            for (const subcategory in data[category]) {
+                articles = articles.concat(data[category][subcategory]); // 合并文章列表
+            }
+        }
 
-    displayResults(results);
+        // 搜索匹配的文章
+        const results = articles.filter(article =>
+            article.title.toLowerCase().includes(query)
+        );
+
+        displayResults(results);
+    } catch (error) {
+        console.error("搜索加载失败:", error);
+    }
 });
 
 function displayResults(results) {
@@ -176,10 +188,12 @@ function displayResults(results) {
 
     results.forEach(article => {
         const item = document.createElement("div");
-        item.innerHTML = `<a href="${article.url}">${article.title}</a>`;
+        item.classList.add("search-result-item");
+        item.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
         resultsDiv.appendChild(item);
     });
 }
+
 </script>
 </body>
 
