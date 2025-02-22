@@ -1,0 +1,48 @@
+/* 供需信息页样式 */
+.filter-bar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.filter-btn.active {
+    background-color: red;
+    color: white;
+}
+
+.article-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.article-card {
+    padding: 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    font-size: 14px;
+    text-align: center;
+    font-weight: bold;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.article-card.red {
+    background-color: red;
+}
+
+.article-card.blue {
+    background-color: blue;
+}
