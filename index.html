@@ -1,53 +1,45 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HWGQ博客</title>
-    <style>
-        body { font-family: Arial, sans-serif; padding: 20px; }
-        .category-container { margin-bottom: 20px; }
-        .category { font-size: 18px; font-weight: bold; margin-top: 20px; border-left: 5px solid red; padding-left: 10px; }
-        .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .btn { padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; border-radius: 5px; text-decoration: none; color: black; min-width: 120px; text-align: center; }
-        .btn:hover { background-color: #f0f0f0; }
-    </style>
-</head>
-<body>
-    <div id="categories"></div>
-
-    <script>
-        async function loadCategories() {
-            const response = await fetch('/api/categories');
-            const data = await response.json();
-            const container = document.getElementById('categories');
-
-            for (const category in data) {
-                const section = document.createElement('div');
-                section.className = 'category-container';
-                
-                const title = document.createElement('div');
-                title.className = 'category';
-                title.innerText = category;
-                section.appendChild(title);
-                
-                const buttonContainer = document.createElement('div');
-                buttonContainer.className = 'buttons';
-                section.appendChild(buttonContainer);
-                
-                data[category].forEach(name => {
-                    const btn = document.createElement('a');
-                    btn.className = 'btn';
-                    btn.innerText = name;
-                    btn.href = `/list.html?category=${encodeURIComponent(category)}&tag=${encodeURIComponent(name)}`;
-                    buttonContainer.appendChild(btn);
-                });
-                
-                container.appendChild(section);
-            }
+async function loadCategories() {
+    try {
+        const response = await fetch('https://db.slightlyrudge7.workers.dev/api/categories');
+        
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
         }
         
-        loadCategories();
-    </script>
-</body>
-</html>
+        const data = await response.json();
+        console.log("API 数据：", data); // 控制台打印数据，调试用
+
+        const container = document.getElementById('categories');
+        container.innerHTML = ''; // 清空内容，防止重复渲染
+
+        for (const category in data) {
+            const section = document.createElement('div');
+            section.className = 'category-container';
+
+            const title = document.createElement('div');
+            title.className = 'category';
+            title.innerText = category;
+            section.appendChild(title);
+
+            const buttonContainer = document.createElement('div');
+            buttonContainer.className = 'buttons';
+            section.appendChild(buttonContainer);
+
+            data[category].forEach(name => {
+                const btn = document.createElement('a');
+                btn.className = 'btn';
+                btn.innerText = name;
+                btn.href = `/list.html?category=${encodeURIComponent(category)}&tag=${encodeURIComponent(name)}`;
+                buttonContainer.appendChild(btn);
+            });
+
+            container.appendChild(section);
+        }
+    } catch (error) {
+        console.error("加载分类失败:", error);
+        document.getElementById('categories').innerHTML = '<p style="color: red;">无法加载分类数据</p>';
+    }
+}
+
+// 调用函数，加载分类
+loadCategories();
