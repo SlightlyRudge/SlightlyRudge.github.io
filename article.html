@@ -27,14 +27,17 @@
             }
 
             try {
-                // 确保路径正确
+                // **确保路径正确**
                 const filePath = `https://slightlyrudge.github.io/articles/${file}`;
                 console.log("加载文章路径:", filePath);
 
+                // **获取 Markdown 文章**
                 const response = await fetch(filePath);
                 if (!response.ok) throw new Error(`无法加载文章: ${response.status}`);
 
                 const text = await response.text();
+                
+                // **解析 Markdown 并显示**
                 document.getElementById("article-title").innerText = file.replace(".md", ""); // 设置标题
                 document.getElementById("content").innerHTML = marked.parse(text); // 解析 Markdown
             } catch (error) {
