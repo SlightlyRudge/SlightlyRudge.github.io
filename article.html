@@ -20,32 +20,35 @@
     <div id="content">文章加载中...</div>
 
     <script>
-      async function loadArticle() {
-    const params = new URLSearchParams(window.location.search);
-    let file = params.get("file");
-    if (!file) {
-        document.getElementById("article-title").innerText = "未找到文章";
-        document.getElementById("content").innerHTML = "<p style='color: red;'>文章参数缺失</p>";
-        return;
-    }
+        async function loadArticle() {
+            const params = new URLSearchParams(window.location.search);
+            let file = params.get("file");
 
-    try {
-        // **自动处理文件名中的空格**
-        file = encodeURIComponent(file);
-        const filePath = `https://slightlyrudge.github.io/articles/${file}`;
-        console.log("加载文章路径:", filePath);
+            if (!file) {
+                document.getElementById("article-title").innerText = "未找到文章";
+                document.getElementById("content").innerHTML = "<p style='color: red;'>文章参数缺失</p>";
+                return;
+            }
 
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`无法加载文章: ${response.status}`);
+            try {
+                // **修正文件路径，确保 URL 兼容中文和空格**
+                const encodedFile = encodeURIComponent(file);
+                const filePath = `https://slightlyrudge.github.io/articles/${encodedFile}`;
+                console.log("加载文章路径:", filePath);
 
-        const text = await response.text();
-        document.getElementById("article-title").innerText = file.replace(".md", "").replace(/%20/g, " "); // 设置标题
-        document.getElementById("content").innerHTML = marked.parse(text);
-    } catch (error) {
-        document.getElementById("content").innerHTML = "<p style='color: red;'>文章加载失败</p>";
-        console.error("文章加载错误:", error);
-    }
-}
+                const response = await fetch(filePath);
+                if (!response.ok) throw new Error(`无法加载文章: ${response.status}`);
+
+                const text = await response.text();
+                
+                // **解析 Markdown 并显示**
+                document.getElementById("article-title").innerText = decodeURIComponent(file).replace(".md", ""); // 设置标题
+                document.getElementById("content").innerHTML = marked.parse(text);
+            } catch (error) {
+                document.getElementById("content").innerHTML = "<p style='color: red;'>文章加载失败</p>";
+                console.error("文章加载错误:", error);
+            }
+        }
 
         loadArticle();
     </script>
