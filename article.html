@@ -3,7 +3,7 @@ async function loadArticle() {
     const file = params.get("file");
     if (!file) {
         document.getElementById("article-title").innerText = "未找到文章";
-        document.getElementById("content").innerHTML = "<p style='color: red;'>文章文件参数缺失</p>";
+        document.getElementById("content").innerHTML = "<p style='color: red;'>文章参数缺失</p>";
         return;
     }
 
@@ -13,7 +13,7 @@ async function loadArticle() {
         console.log("加载文章路径:", filePath);
 
         const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`无法加载文章: ${response.status}`);
+        if (!response.ok) throw new Error(`无法加载: ${response.status}`);
 
         const text = await response.text();
         document.getElementById("article-title").innerText = file.replace(".md", ""); // 设置标题
