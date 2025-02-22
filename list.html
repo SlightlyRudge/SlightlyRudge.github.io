@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章列表 - 中龙项目网</title>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; }
+        .article-list { margin-top: 20px; }
+        .article-item { padding: 10px; border-bottom: 1px solid #ddd; }
+        .article-item a { text-decoration: none; color: #333; font-size: 18px; }
+        .article-item a:hover { color: red; }
+    </style>
+</head>
+<body>
+    <h1 id="category-title"></h1>
+    <div class="article-list" id="article-list"></div>
+
+    <script>
+        async function loadArticles() {
+            const params = new URLSearchParams(window.location.search);
+            const category = params.get("category");
+            if (!category) {
+                document.getElementById("category-title").innerText = "分类未找到";
+                return;
+            }
+            document.getElementById("category-title").innerText = category;
+
+            try {
+                const response = await fetch("articles.json"); // 文章索引文件
+                const data = await response.json();
+                const articles = data[category] || [];
+
+                const listContainer = document.getElementById("article-list");
+                if (articles.length === 0) {
+                    listContainer.innerHTML = "<p>暂无文章</p>";
+                    return;
+                }
+
+                articles.forEach(article => {
+                    const div = document.createElement("div");
+                    div.className = "article-item";
+                    div.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
+                    listContainer.appendChild(div);
+                });
+            } catch (error) {
+                console.error("加载文章列表失败:", error);
+            }
+        }
+
+        loadArticles();
+    </script>
+</body>
+</html>

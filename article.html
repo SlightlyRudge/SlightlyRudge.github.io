@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>文章详情 - 中龙项目网</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/4.0.12/marked.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; padding: 20px; max-width: 800px; margin: auto; }
+        #content { margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <h1 id="article-title"></h1>
+    <div id="content">加载中...</div>
+
+    <script>
+        async function loadArticle() {
+            const params = new URLSearchParams(window.location.search);
+            const file = params.get("file");
+            if (!file) {
+                document.getElementById("content").innerText = "未找到文章";
+                return;
+            }
+
+            try {
+                const response = await fetch(`articles/${file}`);
+                if (!response.ok) throw new Error("无法加载文章");
+                const text = await response.text();
+                document.getElementById("content").innerHTML = marked.parse(text);
+            } catch (error) {
+                document.getElementById("content").innerText = "文章加载失败";
+                console.error(error);
+            }
+        }
+
+        loadArticle();
+    </script>
+</body>
+</html>

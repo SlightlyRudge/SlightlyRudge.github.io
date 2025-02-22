@@ -1,0 +1,9 @@
+{
+    "卡商类": [
+        { "title": "卡商业务介绍", "file": "card-business.md" },
+        { "title": "信用卡提现攻略", "file": "withdraw-guide.md" }
+    ],
+    "代收类": [
+        { "title": "代收服务指南", "file": "collection-guide.md" }
+    ]
+}
