@@ -18,44 +18,46 @@
     <div id="content"></div>
 
     <script>
-        async function loadArticles() {
-            const params = new URLSearchParams(window.location.search);
-            const subcategory = params.get("subcategory");
-            if (!subcategory) {
-                document.getElementById("subcategory-title").innerText = "子分类未找到";
-                return;
-            }
-            document.getElementById("subcategory-title").innerText = subcategory;
+      async function loadArticles() {
+    const params = new URLSearchParams(window.location.search);
+    const subcategory = params.get("subcategory");
+    if (!subcategory) {
+        document.getElementById("subcategory-title").innerText = "子分类未找到";
+        return;
+    }
+    document.getElementById("subcategory-title").innerText = subcategory;
 
-            try {
-                const response = await fetch("articles.json"); // 文章索引文件
-                const data = await response.json();
-                
-                let foundArticles = [];
-                for (const category in data) {
-                    if (data[category][subcategory]) {
-                        foundArticles = data[category][subcategory];
-                        break;
-                    }
-                }
-
-                if (foundArticles.length === 0) {
-                    document.getElementById("content").innerHTML = "<p>暂无文章</p>";
-                    return;
-                }
-
-                const articleList = document.getElementById("content");
-                foundArticles.forEach(article => {
-                    const articleItem = document.createElement("div");
-                    articleItem.className = "article-item";
-                    articleItem.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
-                    articleList.appendChild(articleItem);
-                });
-
-            } catch (error) {
-                console.error("加载文章列表失败:", error);
+    try {
+        const response = await fetch("articles.json"); // 文章索引文件
+        const data = await response.json();
+        
+        let foundArticles = [];
+        for (const category in data) {
+            if (data[category][subcategory]) {
+                foundArticles = data[category][subcategory];
+                break;
             }
         }
+
+        if (foundArticles.length === 0) {
+            document.getElementById("content").innerHTML = "<p>暂无文章</p>";
+            return;
+        }
+
+        const articleList = document.getElementById("content");
+        foundArticles.forEach(article => {
+            const fileName = encodeURIComponent(article.file.trim()); // 处理空格问题
+            articleItem = document.createElement("div");
+            articleItem.className = "article-item";
+            articleItem.innerHTML = `<a href="article.html?file=${fileName}">${article.title}</a>`;
+            articleList.appendChild(articleItem);
+        });
+
+    } catch (error) {
+        console.error("加载文章列表失败:", error);
+    }
+}
+
 
         loadArticles();
     </script>
