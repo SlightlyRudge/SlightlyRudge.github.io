@@ -6,14 +6,14 @@
     <title>HWGQ博客</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
-        .category { font-size: 20px; font-weight: bold; margin-top: 20px; border-left: 5px solid red; padding-left: 10px; }
+        .category-container { margin-bottom: 20px; }
+        .category { font-size: 18px; font-weight: bold; margin-top: 20px; border-left: 5px solid red; padding-left: 10px; }
         .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 10px; }
-        .btn { padding: 10px 15px; border: 1px solid #ccc; cursor: pointer; border-radius: 5px; text-decoration: none; color: black; }
+        .btn { padding: 8px 12px; border: 1px solid #ccc; cursor: pointer; border-radius: 5px; text-decoration: none; color: black; min-width: 120px; text-align: center; }
         .btn:hover { background-color: #f0f0f0; }
     </style>
 </head>
 <body>
-    <h1>HWGQ博客</h1>
     <div id="categories"></div>
 
     <script>
@@ -24,13 +24,16 @@
 
             for (const category in data) {
                 const section = document.createElement('div');
-                section.className = 'category';
-                section.innerText = category;
-                container.appendChild(section);
-
+                section.className = 'category-container';
+                
+                const title = document.createElement('div');
+                title.className = 'category';
+                title.innerText = category;
+                section.appendChild(title);
+                
                 const buttonContainer = document.createElement('div');
                 buttonContainer.className = 'buttons';
-                container.appendChild(buttonContainer);
+                section.appendChild(buttonContainer);
                 
                 data[category].forEach(name => {
                     const btn = document.createElement('a');
@@ -39,6 +42,8 @@
                     btn.href = `/list.html?category=${encodeURIComponent(category)}&tag=${encodeURIComponent(name)}`;
                     buttonContainer.appendChild(btn);
                 });
+                
+                container.appendChild(section);
             }
         }
         
