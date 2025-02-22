@@ -6,15 +6,17 @@
     <title>文章列表 - 中龙项目网</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 20px; }
-        .article-list { margin-top: 20px; }
-        .article-item { padding: 10px; border-bottom: 1px solid #ddd; }
-        .article-item a { text-decoration: none; color: #333; font-size: 18px; }
+        h1 { text-align: center; }
+        .subcategory { margin-top: 20px; font-size: 20px; font-weight: bold; }
+        .article-list { margin-left: 20px; }
+        .article-item { padding: 5px; }
+        .article-item a { text-decoration: none; color: #333; font-size: 16px; }
         .article-item a:hover { color: red; }
     </style>
 </head>
 <body>
     <h1 id="category-title"></h1>
-    <div class="article-list" id="article-list"></div>
+    <div id="content"></div>
 
     <script>
         async function loadArticles() {
@@ -29,19 +31,32 @@
             try {
                 const response = await fetch("articles.json"); // 文章索引文件
                 const data = await response.json();
-                const articles = data[category] || [];
+                const subcategories = data[category];
 
-                const listContainer = document.getElementById("article-list");
-                if (articles.length === 0) {
-                    listContainer.innerHTML = "<p>暂无文章</p>";
+                if (!subcategories) {
+                    document.getElementById("content").innerHTML = "<p>暂无文章</p>";
                     return;
                 }
 
-                articles.forEach(article => {
-                    const div = document.createElement("div");
-                    div.className = "article-item";
-                    div.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
-                    listContainer.appendChild(div);
+                const contentContainer = document.getElementById("content");
+
+                Object.keys(subcategories).forEach(subcategory => {
+                    const subcategoryDiv = document.createElement("div");
+                    subcategoryDiv.className = "subcategory";
+                    subcategoryDiv.innerText = subcategory;
+
+                    const articleList = document.createElement("div");
+                    articleList.className = "article-list";
+
+                    subcategories[subcategory].forEach(article => {
+                        const articleItem = document.createElement("div");
+                        articleItem.className = "article-item";
+                        articleItem.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
+                        articleList.appendChild(articleItem);
+                    });
+
+                    contentContainer.appendChild(subcategoryDiv);
+                    contentContainer.appendChild(articleList);
                 });
             } catch (error) {
                 console.error("加载文章列表失败:", error);
