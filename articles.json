@@ -1,9 +1,19 @@
 {
-    "卡商类": [
-        { "title": "卡商业务介绍", "file": "card-business.md" },
-        { "title": "信用卡提现攻略", "file": "withdraw-guide.md" }
-    ],
-    "代收类": [
-        { "title": "代收服务指南", "file": "collection-guide.md" }
-    ]
+    "卡商类": {
+        "卡片/POS/信用卡": [
+            { "title": "POS机使用指南", "file": "pos-guide.md" },
+            { "title": "信用卡申请技巧", "file": "credit-card-tips.md" }
+        ],
+        "盾卡/公户": [
+            { "title": "盾卡安全使用", "file": "shield-card.md" }
+        ],
+        "无卡取现": [
+            { "title": "线上无卡支付教程", "file": "no-card-payment.md" }
+        ]
+    },
+    "代收类": {
+        "综合代收": [
+            { "title": "代收业务介绍", "file": "collection-guide.md" }
+        ]
+    }
 }
