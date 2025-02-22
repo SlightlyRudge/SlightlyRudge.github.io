@@ -17,14 +17,14 @@
     <div id="categories"></div>
 
     <script>
-       async function loadCategories() {
+async function loadCategories() {
     try {
-        const response = await fetch('https://db.slightlyrudge7.workers.dev/api/categories'); 
-        
+        const response = await fetch('https://db.slightlyrudge7.workers.dev/api/categories');
+
         if (!response.ok) {
             throw new Error(`HTTP 错误！状态：${response.status}`);
         }
-        
+
         const data = await response.json();
         console.log("API 数据：", data); // 控制台打印数据，调试用
 
@@ -55,13 +55,14 @@
             container.appendChild(section);
         }
     } catch (error) {
-        console.error("加载分类失败:", error);
-        document.getElementById('categories').innerHTML = '<p style="color: red;">无法加载分类数据</p>';
+        console.error("加载分类失败:", error);  // 打印错误信息
+        document.getElementById('categories').innerHTML = `<p style="color: red;">无法加载分类数据: ${error.message}</p>`;
     }
 }
 
 // 调用函数，加载分类
 loadCategories();
+
 
     </script>
 </body>
