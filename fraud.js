@@ -4,6 +4,11 @@ document.addEventListener("DOMContentLoaded", function () {
     fetch("fraud-posts.json")
         .then(response => response.json())
         .then(data => {
+            if (!fraudList) {
+                console.error("fraud-list 容器不存在！");
+                return;
+            }
+
             if (data.length === 0) {
                 fraudList.innerHTML = "<p>暂无防骗文章</p>";
                 return;
@@ -11,12 +16,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
             data.forEach(article => {
                 const item = document.createElement("div");
-                item.className = "article-card";
-
-                // **确保 article.title 正确赋值**
+                item.className = "article-card";  // 添加样式
                 item.innerHTML = `
-                    <h3>${article.title ? article.title : "未命名文章"}</h3>
-                    <p>${article.time ? article.time : "未知时间"}</p>
+                    <h3>${article.title}</h3>
+                    <p>${article.time}</p>
                 `;
 
                 item.addEventListener("click", () => {
