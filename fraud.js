@@ -9,13 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 return;
             }
 
-            const item = document.createElement("div");
-item.className = "article-card";
-item.innerHTML = `
-    <h3 style="color:#333;">${article.title}</h3>
-    <p style="color:#666;">${article.time}</p>
-`;
-
+            data.forEach(article => {
+                const item = document.createElement("div");
+                item.className = "article-card";
 
                 // **确保 article.title 正确赋值**
                 item.innerHTML = `
