@@ -60,16 +60,6 @@
 .search-result-item a:hover {
     text-decoration: underline;
 }
-.nav-container {
-    display: flex;
-    justify-content: center; /* 让内容居中 */
-    width: 100%;
-}
-.nav-links {
-    display: flex;
-    gap: 15px; /* 控制间距 */
-    flex-wrap: wrap; /* 让导航栏在屏幕小的时候换行 */
-}
 
        .navbar {
     position: fixed;
@@ -82,6 +72,12 @@
     z-index: 1000;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;  /* 让左侧 logo 和右侧菜单紧凑排列 */
+    align-items: center;
+    padding: 10px 20px;
+}
 
     </style>
 </head>
@@ -94,6 +90,7 @@
             <a href="fraud.html">防骗指南</a>
             <a href="lianxiwomen.html">联系我们</a>
             <a href="gonggaoxiaoxi.html">公告消息</a>
+           <a href="about.html">关于我们</a>
             <a href="faq.html">常见问题</a>
         </div>
     </div>
