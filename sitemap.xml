@@ -3,11 +3,20 @@
     <url>
         <loc>https://slightlyrudge.github.io/</loc>
         <lastmod>2025-02-23</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>1.0</priority>
     </url>
     <url>
         <loc>https://slightlyrudge.github.io/market.html</loc>
         <lastmod>2025-02-23</lastmod>
+        <changefreq>weekly</changefreq>
         <priority>0.8</priority>
     </url>
+    <url>
+        <loc>https://slightlyrudge.github.io/list.html?subcategory=卡片%2FPOS%2F信用卡</loc>
+        <lastmod>2025-02-23</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.5</priority>
+    </url>
+    <!-- 继续添加你的其他文章页面 -->
 </urlset>
