@@ -76,3 +76,7 @@
 .article-card p {
     color: #333;  /* 让标题和日期变深色 */
 }
+
+body {
+    padding-top: 50px; /* 和导航栏的高度一致 */
+}
