@@ -80,3 +80,13 @@
 body {
     padding-top: 50px; /* 和导航栏的高度一致 */
 }
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 让两侧贴边 */
+}
+.navbar .nav-links {
+    flex-grow: 1; /* 让菜单区域自动扩展 */
+    text-align: right; /* 让文字靠右 */
+}
