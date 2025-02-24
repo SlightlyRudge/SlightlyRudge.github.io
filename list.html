@@ -42,7 +42,7 @@ async function loadArticles() {
     }
 
     // 设置标题为当前分类
-    titleElement.innerText = `{decodeURIComponent(tag)}`;
+    titleElement.innerText = `项目名称：${decodeURIComponent(tag)}`;
 
     try {
         const response = await fetch("https://slightlyrudge.github.io/articles.json");
