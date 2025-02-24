@@ -18,47 +18,45 @@
     <div id="content"></div>
 
     <script>
-        async function loadArticles() {
-            const params = new URLSearchParams(window.location.search);
-            const subcategory = params.get("subcategory");
-            if (!subcategory) {
-                document.getElementById("subcategory-title").innerText = "子分类未找到";
-                return;
-            }
-            document.getElementById("subcategory-title").innerText = subcategory;
+      async function loadArticles() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const tag = params.get("tag");
 
-            try {
-                const response = await fetch("articles.json"); // 文章索引文件
-                const data = await response.json();
-                
-                let foundArticles = [];
-                for (const category in data) {
-                    if (data[category][subcategory]) {
-                        foundArticles = data[category][subcategory];
-                        break;
-                    }
-                }
+    if (!category || !tag) {
+        document.getElementById("article-list").innerHTML = "<p>未找到子分类</p>";
+        return;
+    }
 
-                if (foundArticles.length === 0) {
-                    document.getElementById("content").innerHTML = "<p>暂无文章</p>";
-                    return;
-                }
+    try {
+        const response = await fetch("https://slightlyrudge.github.io/articles.json");
+        if (!response.ok) throw new Error(`无法加载数据: ${response.status}`);
 
-                const articleList = document.getElementById("content");
-                foundArticles.forEach(article => {
-                    const articleItem = document.createElement("div");
-                    articleItem.className = "article-item";
-                    articleItem.innerHTML = `<a href="article.html?file=${encodeURIComponent(article.file)}">${article.title}</a>`;
-                    articleList.appendChild(articleItem);
-                });
+        const data = await response.json();
 
-            } catch (error) {
-                console.error("加载文章列表失败:", error);
-            }
+        if (!data[category] || !data[category][tag]) {
+            document.getElementById("article-list").innerHTML = "<p>子分类未找到</p>";
+            return;
         }
 
+        const articles = data[category][tag];
+        let html = "<ul>";
 
-        loadArticles();
+        articles.forEach(article => {
+            const articleUrl = `article.html?file=${encodeURIComponent(article.file)}`;
+            html += `<li><a href="${articleUrl}">${article.title}</a></li>`;
+        });
+
+        html += "</ul>";
+        document.getElementById("article-list").innerHTML = html;
+    } catch (error) {
+        console.error("加载文章失败:", error);
+        document.getElementById("article-list").innerHTML = "<p>无法加载文章列表</p>";
+    }
+}
+
+loadArticles();
+
     </script>
 </body>
 </html>
