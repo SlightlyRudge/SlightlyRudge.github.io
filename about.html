@@ -1,16 +1,38 @@
 <!DOCTYPE html>
 <html lang="zh">
 <head>
+  <meta name="description" content="中龙项目担保网，最大的担保平台、最可靠的担保平台">
+<meta name="keywords" content="担保, 项目, 代码, 中龙项目担保网">
+<meta name="author" content="中龙项目担保网1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="index, follow">
+
    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>中龙项目网</title>
+    <title>中龙项目担保平台</title>
     <style>
         body { font-family: Arial, sans-serif; padding: 0; margin: 0; }
         .navbar { background-color: #fff; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #ddd; }
         .navbar strong { font-size: 24px; } /* 增大网站名称字体 */
-        .nav-links { display: flex; gap: 20px; }
-        .nav-links a { text-decoration: none; color: black; font-size: 16px; }
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    height: auto; /* 取消固定高度 */
+    flex-wrap: wrap; /* 防止内容超出 */
+}
+.nav-links {
+    display: flex;
+    flex-wrap: wrap; /* 允许文字换行 */
+    gap: 15px;
+    max-width: 80%; /* 限制宽度，防止溢出 */
+}
+.nav-links a {
+    white-space: nowrap; /* 避免换行 */
+}
+
         .hero { position: relative; text-align: center; color: white; }
         .hero img { width: 100%; height: 400px; object-fit: cover; } /* 调整大横幅图片高度 */
         .hero-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 24px; font-weight: bold; background: rgba(0, 0, 0, 0.6); padding: 10px 20px; border-radius: 5px; }
@@ -66,24 +88,35 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 50px; /* 你的导航栏高度 */
+    height: 80px; /* 你的导航栏高度 */
     background: white;
     box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
     z-index: 1000;
+}
+
+.navbar strong {
+    flex-grow: 1; /* 让标题填充可用空间 */
+}
+.nav-links {
+    flex-grow: 2; /* 让导航栏自动调整 */
+}
+       
+.title strong {
+    color: red;/* 标题颜色 */
 }
 
     </style>
 </head>
 <body>
     <div class="navbar">
-        <div><strong>中龙项目网</strong></div>
+<div class="title"><strong>中龙项目担保网</strong></div>
         <div class="nav-links">
             <a href="index.html">首页</a>
             <a href="market.html">供需信息</a>
             <a href="fraud.html">防骗指南</a>
             <a href="lianxiwomen.html">联系我们</a>
             <a href="gonggaoxiaoxi.html">公告消息</a>
-            <a href="about.html">关于我们</a>
+           <a href="about.html">关于我们</a>
             <a href="faq.html">常见问题</a>
         </div>
     </div>
@@ -109,7 +142,7 @@
 </div>
 
    
-   
+
 <!DOCTYPE html>
 <html lang="zh">
 <head>
@@ -188,10 +221,7 @@
 
 
 
-
-
-
-
+      
 <script>
 document.getElementById("search-btn").addEventListener("click", async function() {
     const query = document.getElementById("search-input").value.trim().toLowerCase();
