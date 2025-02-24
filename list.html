@@ -14,7 +14,7 @@
     </style>
 </head>
 <body>
-    <h1 id="subcategory-title"></h1>
+    <h1 id="subcategory-title">加载中...</h1>
     <div id="content"></div>
 
     <div id="article-list">
@@ -28,15 +28,21 @@ async function loadArticles() {
     const tag = params.get("tag");
 
     const articleListDiv = document.getElementById("article-list");
-    if (!articleListDiv) {
-        console.error("错误: #article-list 容器未找到");
+    const titleElement = document.getElementById("subcategory-title");
+
+    if (!articleListDiv || !titleElement) {
+        console.error("错误: 容器未找到");
         return;
     }
 
     if (!category || !tag) {
+        titleElement.innerText = "未找到子分类";
         articleListDiv.innerHTML = "<p>未找到子分类</p>";
         return;
     }
+
+    // 设置标题为当前分类
+    titleElement.innerText = `分类名称：${decodeURIComponent(tag)}`;
 
     try {
         const response = await fetch("https://slightlyrudge.github.io/articles.json");
@@ -71,8 +77,6 @@ async function loadArticles() {
 }
 
 loadArticles();
-
-
     </script>
 </body>
 </html>
