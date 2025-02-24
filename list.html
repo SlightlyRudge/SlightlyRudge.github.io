@@ -22,17 +22,19 @@
 </div>
 
     <script>
-      async function loadArticles() {
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
-const tag = params.get("tag");
+async function loadArticles() {
+    const params = new URLSearchParams(window.location.search);
+    const category = params.get("category");
+    const tag = params.get("tag");
 
-console.log("Category:", category);
-console.log("Tag:", tag);
-
+    const articleListDiv = document.getElementById("article-list");
+    if (!articleListDiv) {
+        console.error("错误: #article-list 容器未找到");
+        return;
+    }
 
     if (!category || !tag) {
-        document.getElementById("article-list").innerHTML = "<p>未找到子分类</p>";
+        articleListDiv.innerHTML = "<p>未找到子分类</p>";
         return;
     }
 
@@ -41,9 +43,10 @@ console.log("Tag:", tag);
         if (!response.ok) throw new Error(`无法加载数据: ${response.status}`);
 
         const data = await response.json();
+        console.log("JSON 数据加载成功:", data);
 
         if (!data[category] || !data[category][tag]) {
-            document.getElementById("article-list").innerHTML = "<p>子分类未找到</p>";
+            articleListDiv.innerHTML = "<p>子分类未找到</p>";
             return;
         }
 
@@ -51,19 +54,24 @@ console.log("Tag:", tag);
         let html = "<ul>";
 
         articles.forEach(article => {
-            const articleUrl = `article.html?file=${encodeURIComponent(article.file)}`;
-            html += `<li><a href="${articleUrl}">${article.title}</a></li>`;
+            if (article.title && article.file) {
+                const articleUrl = `article.html?file=${encodeURIComponent(article.file)}`;
+                html += `<li><a href="${articleUrl}">${article.title}</a></li>`;
+            } else {
+                console.warn("数据格式错误:", article);
+            }
         });
 
         html += "</ul>";
-        document.getElementById("article-list").innerHTML = html;
+        articleListDiv.innerHTML = html;
     } catch (error) {
         console.error("加载文章失败:", error);
-        document.getElementById("article-list").innerHTML = "<p>无法加载文章列表</p>";
+        articleListDiv.innerHTML = "<p>无法加载文章列表</p>";
     }
 }
 
 loadArticles();
+
 
     </script>
 </body>
