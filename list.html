@@ -19,9 +19,13 @@
 
     <script>
       async function loadArticles() {
-    const params = new URLSearchParams(window.location.search);
-    const category = params.get("category");
-    const tag = params.get("tag");
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
+const tag = params.get("tag");
+
+console.log("Category:", category);
+console.log("Tag:", tag);
+
 
     if (!category || !tag) {
         document.getElementById("article-list").innerHTML = "<p>未找到子分类</p>";
