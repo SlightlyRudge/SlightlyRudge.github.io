@@ -1,11 +1,16 @@
 # SlightlyRudge.github.io
 
 index.html---首页-页面
-market.html---供需消息-页面
+说明：
+data/categories.json---首页分类增加删除。
+articles.json---分类增加文章
+articles/---文章修改增加
 
+market.html---供需消息-页面
+market-posts.json---供需文章增加删除修改
 
 fraud.html---防骗指南-页面
-
+fraud-posts.json---防骗指南文章增加删除修改
 
 lianxiwomen.html---联系我们-页面
 
@@ -17,6 +22,7 @@ about.html---关于我们-页面
 
 
 faq.html---常见问题-页面
+faq.html---文章列表标题增加删除
 常见问题文章路径faq/.html是每篇文章
 
 
