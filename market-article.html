@@ -31,7 +31,7 @@
 
                 document.querySelector("#article-title").textContent = article.title;
                 document.querySelector("#article-content").innerHTML = article.content.replace(/\n/g, "<br>"); // 显示文章内容
-                document.querySelector("#article-time").textContent = "发布时间：" + article.time;
+                document.querySelector("#article-time").textContent = "简介：" + article.time;
             })
             .catch(error => {
                 console.error("加载文章失败:", error);
